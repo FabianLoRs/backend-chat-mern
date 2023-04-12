@@ -1,0 +1,77 @@
+{
+	"root": true, // Permite espesificar el directorio donde trabaja tu .eslintrc
+	"parser": "@typescript-eslint/parser", // Me permite que la resolucion de los TS vengan incluida la definicion de errones del es-lint
+	"plugins": ["@typescript-eslint"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
+	],
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module"
+	},
+	"rules": {
+		"semi": [2, "always"],
+		"quotes": ["error", "single"],
+		"space-before-function-paren": [0, { "anonymous": "always", "named": "always" }],
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"no-return-assign": 0,
+		"camelcase": "off",
+		"@typescript-eslint/no-explicit-any": ["warn"],
+		"curly": ["error"],
+		"no-empty": ["error"],
+		"@typescript-eslint/no-unused-vars": ["warn"],
+		"@typescript-eslint/explicit-modelo-boundary-types": ["off"],
+		"@typescript-eslint/no-namespace": ["off"]
+	}
+}
+/** space-before-function-paren **/
+// Para funciones anónimas:
+// Caso incorrecto:
+// const func =()=>{}
+// Caso correcto:
+// const func = () => {}
+
+// Para funciones con nombre:
+// Incorrecto:
+// function hello(){}
+// Correcto:
+// function hello () {}
+
+// Para funciones sin nombre:
+// Incorrecto
+// ()=>{}
+// Correcto
+// () => {}
+
+/** @typescript-eslint/no-non-null-assertion **/
+/* class Dog {
+	name!: string
+} */
+
+/** no-return-assign **/
+/*
+	function addNumbers(a, b, c) {
+		return a = b + c
+	}
+*/
+
+/** camelcase **/
+/*
+	const my_variable = 'hello';
+*/
+
+/** @typescript-eslint/explicit-modelo-boundary-types **/
+/*
+	interface Dog {
+		run (req: Request, res: Response): void
+	}
+
+	class x implement Dog {
+		run(): void {
+
+		}
+	}
+*/
