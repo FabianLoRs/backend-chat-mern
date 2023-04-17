@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcryptjs';
-import { IAuthDocument } from '@auth/interfaces/auth.interface';
+import { IAuthDocument } from '@auth/interfaces/authDocument.interface';
 import { model, Model, Schema } from 'mongoose';
 import { config } from '@configs/configEnvs';
 
@@ -7,14 +7,14 @@ import { config } from '@configs/configEnvs';
 // Design Patter AAA (Authorization, Authentication, Auditory) / Security for Design (SbD): https://www.ticportal.es/glosario-tic/seguridad-diseno-sbd
 
 const authSchema: Schema = new Schema(
-	{
-		usernam: { type: 'String' },
-		uId: { type: 'String' },
-		email: { type: 'String' },
-		password: { type: 'String' },
-		avatarColor: { type: 'String' },
-		createAt: { type: Date, default: Date.now() }
-	},
+  {
+    username: { type: 'String' },
+    uId: { type: 'String' },
+    email: { type: 'String' },
+    password: { type: 'String' },
+    avatarColor: { type: 'String' },
+    createdAt: { type: Date, default: Date.now() }
+  },
 	{
 		toJSON: {
 			transform(_doc, ret) {

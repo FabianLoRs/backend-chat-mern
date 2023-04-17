@@ -51,13 +51,13 @@ export class UserCache extends BaseCache {
 			followersCount: `${followersCount}`,
 			followingCount: `${followingCount}`,
 			notifications: JSON.stringify(notifications),
-			social: JSON.stringify(social),
 			work: `${work}`,
 			location: `${location}`,
 			school: `${school}`,
 			quote: `${quote}`,
 			bgImageVersion: `${bgImageVersion}`,
-			bgImageId: `${bgImageId}`
+			bgImageId: `${bgImageId}`,
+			social: JSON.stringify(social)
 		};
 
 		try {
@@ -75,16 +75,33 @@ export class UserCache extends BaseCache {
 		}
 	}
 
-	// public async getUsersFromCache(userId: string): Promise<IUserDocument | null> {
-	// 	try {
-	// 		if (!this.client.isOpen) {
-	// 			await this.client.connect();
-	// 		}
-	// 		// Pending IMPLEMENTATION
-	// 		return null;
-	// 	} catch (error) {
-	// 		throw new ServerError('Server Redis error. Try again.');
-	// 	}
-	// }
+	public async getUsersFromCache(userId: string): Promise<IUserDocument | null> {
+		try {
+			if (!this.client.isOpen) {
+				await this.client.connect();
+			}
 
+			// IMPLEMENTATION
+			const response: IUserDocument = (await this.client.HGETALL(`users:${userId}`)) as unknown as IUserDocument;
+			response.createAt = new Date(Generators.parseJson(`${response.createAt}`));
+			response.postsCount = Generators.parseJson(`${response.postsCount}`);
+			response.blocked = Generators.parseJson(`${response.blocked}`);
+			response.blockedBy = Generators.parseJson(`${response.blockedBy}`);
+			response.notifications = Generators.parseJson(`${response.notifications}`);
+			response.social = Generators.parseJson(`${response.social}`);
+			response.followersCount = Generators.parseJson(`${response.followersCount}`);
+			response.followingCount = Generators.parseJson(`${response.followingCount}`);
+			response.bgImageId = Generators.parseJson(`${response.bgImageId}`);
+			response.bgImageVersion = Generators.parseJson(`${response.bgImageVersion}`);
+			response.work = Generators.parseJson(`${response.work}`);
+			response.school = Generators.parseJson(`${response.school}`);
+			response.location = Generators.parseJson(`${response.location}`);
+			response.quote = Generators.parseJson(`${response.quote}`);
+
+			return response;
+		} catch (error) {
+			log.error(error);
+			throw new ServerError('Server Redis error. Try again.');
+		}
+	}
 }

@@ -32,7 +32,7 @@
 			"@configs/*": ["src/configs/*"],
 			"@auth/*": ["src/features/auth/*"],
 			"@user/*": ["src/features/user/*"],
-			"@interfaces/*": ["src/interfaces/http/*"],
+			"@interfaces/*": ["src/interfaces/*"],
 			"@decorators/*": ["src/shared/globals/decorators/*"],
 			"@helpers/*": ["src/shared/globals/helpers/*"],
 			"@services/*": ["src/shared/globals/services/*"],

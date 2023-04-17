@@ -16,6 +16,7 @@ class Config {
 	public CLOUD_API_KEY: string | undefined;
 	public CLOUD_API_SECRET: string | undefined;
 	public SALT_ROUND: string | undefined;
+	public CLOUD_DOMAIN: string | undefined;
 
 
 	constructor() {
@@ -31,6 +32,7 @@ class Config {
 		this.CLOUD_API_KEY = process.env.CLOUD_API_KEY;
 		this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET;
 		this.SALT_ROUND = process.env.SALT_ROUND;
+		this.CLOUD_DOMAIN = process.env.CLOUD_DOMAIN;
 	}
 
 	public validateConfig(): void {

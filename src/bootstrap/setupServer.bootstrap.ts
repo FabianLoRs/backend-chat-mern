@@ -15,8 +15,9 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import { config } from '@configs/configEnvs';
 // import { logger } from '../configs/configLogs';
 import { logger } from '@configs/configLogs';
-import { CustomError } from '@helpers/errors/customError';
 import { IErrorResponse } from '../shared/globals/helpers/errors/errorResponse.interface';
+import { CustomError } from '@helpers/errors/customError';
+import applicationRoutes from '@interfaces/http/routes';
 
 const log: Logger = logger.createLogger('server');
 
@@ -30,9 +31,10 @@ export class ChatServer {
 
 	public start(): void {
 		this.securityMiddleware(this.app);
-    this.standardMiddleware(this.app);
-    this.globalErrorHandler(this.app);
-    this.startServer(this.app);
+		this.standardMiddleware(this.app);
+		this.routesMiddleware(this.app);
+		this.globalErrorHandler(this.app);
+		this.startServer(this.app);
 	}
 
 	private securityMiddleware(app: Application): void {
@@ -63,6 +65,10 @@ export class ChatServer {
 		app.use(compression());
 		app.use(json({ limit: '50mb' }));
 		app.use(urlencoded({ extended: true, limit: '50mb' }));
+	}
+
+	private routesMiddleware(app: Application) {
+		applicationRoutes(app);
 	}
 
 	private globalErrorHandler(app: Application): void {
@@ -99,11 +105,11 @@ export class ChatServer {
 
 	private async createSocketIO(httpServer: http.Server): Promise<Server> {
 		const io: Server = new Server(httpServer, {
-      cors: {
-        origin: config.CLIENT_URL,
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-      }
-    });
+			cors: {
+				origin: config.CLIENT_URL,
+				methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+			}
+		});
 		const pubClient = createClient({ url: config.REDIS_HOST });
 		const subClient = pubClient.duplicate();
 		await Promise.all([pubClient.connect(), subClient.connect()]);
@@ -112,7 +118,7 @@ export class ChatServer {
 	}
 
 	private socketIOConnections(io: Server): void {
-    console.log(io);
-    log.info('SocketIO Connections Ok.');
-  }
+		console.log(io);
+		log.info('SocketIO Connections OK.');
+	}
 }

@@ -29,9 +29,9 @@ const userSchema: Schema = new Schema({
 	quote: { type: String, default: '' }
 });
 
-const userModel: Model<IUserDocument> = model<IUserDocument>('User', userSchema, 'User');
+const UserModel: Model<IUserDocument> = model<IUserDocument>('User', userSchema, 'User');
 
-export { userModel };
+export { UserModel };
 
 // collections: user
 // document: userSchema
