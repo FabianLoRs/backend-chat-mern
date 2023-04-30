@@ -1,6 +1,6 @@
 export interface IResetPasswordParams {
 	username: string;
 	email: string;
-	ipadress: string;
+	ipaddress: string;
 	date: string;
 }

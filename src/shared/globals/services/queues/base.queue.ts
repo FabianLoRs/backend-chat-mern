@@ -32,8 +32,9 @@ export abstract class BaseQueue {
 		this.log = logger.createLogger(`${queueName}Queue`);
 
 		// completed: Sirve para limpiar la cola
-		this.queue.on('completed', (job: Job) => { // on es para apuntar a un evento.
-			//job.remove();
+		this.queue.on('completed', (job: Job) => {
+			// on es para apuntar a un evento.
+			job.remove();
 		});
 
 		// global:complete: Sirve para ir entregando las trazas de la cola
@@ -49,7 +50,7 @@ export abstract class BaseQueue {
 
 	// addJob
 	protected addJob(name: string, data: IBaseJobData): void {
-		this.queue.add(name, data, { attempts:  3, backoff: { type: 'fixed', delay: 5000 } });
+		this.queue.add(name, data, { attempts: 3, backoff: { type: 'fixed', delay: 5000 } });
 	}
 
 	// processJob

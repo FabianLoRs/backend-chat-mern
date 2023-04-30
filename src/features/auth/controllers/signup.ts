@@ -31,12 +31,13 @@ export class SignUp extends SignUpUtility {
 		const authObjectId: ObjectId = new ObjectId();
 		const userObjectId: ObjectId = new ObjectId();
 		const uId = `${Generators.generateRandomIntegers(12)}`;
+		const passwordHash = await Generators.hash(password);
 		const authData: IAuthDocument = SignUp.prototype.signUpData({
 			_id: authObjectId,
 			uId,
 			username,
 			email,
-			password,
+			password: passwordHash,
 			avatarColor
 		});
 
